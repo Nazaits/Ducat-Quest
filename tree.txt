@@ -1,0 +1,12 @@
+ducat_quest/
+│
+├── app.py                # Main Streamlit entry point
+├── prompts.py           # All prompts (as variables/functions)
+├── db.py                 # Simple DB helper
+├── logic.py              # Core business logic (LLM, rotation, inflation)
+├── pages/
+│   ├── 1_Task_List.py    # Task List page
+│   ├── 2_Create_Task.py  # Task Creation page
+│   └── 3_Shop.py         # Shop/Rewards page
+├── assets/               # For reward images/screenshots (optional)
+└── requirements.txt

@@ -1,0 +1,5 @@
+Add big rewards
+Expand task with description
+Refactor code
+valuation balancing 
+Add readme with installation and check it out
