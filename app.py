@@ -1,6 +1,6 @@
 # app.py
 import streamlit as st
-import logic
+from utils.util import show_ducat_bar
 import db
 import ssl
 
@@ -20,7 +20,7 @@ def main():
         Welcome to Ducat Quest! Earn ducats for tasks, spend them in your custom shop, and let AI do the boring parts.
         """
     )
-    logic.show_ducat_bar()
+    show_ducat_bar()
 
 if __name__ == "__main__":
     main()

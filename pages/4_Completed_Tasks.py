@@ -1,6 +1,5 @@
 import streamlit as st
 from db import query
-import datetime
 
 st.title("✅ Completed Tasks")
 

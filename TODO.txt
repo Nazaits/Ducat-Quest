@@ -1,3 +1,2 @@
 Add big rewards
-Refactor code
 Add readme with installation and check it out

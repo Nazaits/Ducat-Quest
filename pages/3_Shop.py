@@ -1,6 +1,11 @@
 import streamlit as st
 import os
-import logic, db
+import db
+from utils.util import( 
+    rotate_shop, extract_image_from_url, add_shop_item, 
+    show_ducat_bar, show_timers, smart_ducat_str, 
+    buy_shop_item
+)
 from datetime import datetime, timedelta
 
 ASSET_DIR = "assets"
@@ -13,7 +18,7 @@ def rotate_shop_if_needed():
     # Find most recent Monday 12pm
     most_recent_monday = (now - timedelta(days=now.weekday())).replace(hour=12, minute=0, second=0, microsecond=0)
     if now >= most_recent_monday and last_rot_dt < most_recent_monday:
-        logic.rotate_shop()
+        rotate_shop()
         db.query("UPDATE user_stats SET value=? WHERE key='last_shop_rotation'", (now.isoformat(),), commit=True)
 
 st.header("🏆 Shop & Rewards")
@@ -27,7 +32,7 @@ with st.expander("➕ Add a Reward Item"):
     image_url = ""
     if not uploaded_img and link:
         # Try to extract image from link
-        image_url = logic.extract_image_from_url(link)
+        image_url = extract_image_from_url(link)
     if uploaded_img is not None:
         # Make a unique filename with timestamp to avoid overwrites
         save_name = f"{uploaded_img.name}"
@@ -45,7 +50,7 @@ with st.expander("➕ Add a Reward Item"):
         )
 
     if st.button("Add to Shop"):
-        logic.add_shop_item(link, value, image_path, instant_rotation=instant, ducat_premium=0.20 if instant else 0)
+        add_shop_item(link, value, image_path, instant_rotation=instant, ducat_premium=0.20 if instant else 0)
         if instant:
             st.success("Reward added instantly to this week's shop (with a 20% ducat premium)!")
         else:
@@ -53,8 +58,8 @@ with st.expander("➕ Add a Reward Item"):
         st.rerun()
 
 rotate_shop_if_needed()
-logic.show_ducat_bar()
-logic.show_timers(page="shop")
+show_ducat_bar()
+show_timers(page="shop")
 # --- Shop rotation grids
 st.subheader("🎲 This Week's Shop Rotation")
 rotation = db.query(
@@ -85,12 +90,12 @@ else:
                 else:
                     col.image("assets/placeholder.png", use_container_width=True)
                 col.markdown(f"**{name}**")
-                col.markdown(f"**{logic.smart_ducat_str(ducats)} 💰**")
+                col.markdown(f"**{smart_ducat_str(ducats)} 💰**")
                 if bought:
                     col.success("Already bought")
                 else:
                     if col.button(f"Buy", key=f"buy_{rid}"):
-                        success = logic.buy_shop_item(rid, ducats)
+                        success = buy_shop_item(rid, ducats)
                         if success:
                             st.success(f"You bought '{name}'!")
                             st.rerun()
@@ -117,5 +122,5 @@ else:
             else:
                 st.image("assets/placeholder.png", width=100)
         with col1:
-            st.write(f"- **{name}** ({logic.smart_ducat_str(ducats)} 💰, added {added[:10]})")
+            st.write(f"- **{name}** ({smart_ducat_str(ducats)} 💰, added {added[:10]})")
         # st.markdown(desc)

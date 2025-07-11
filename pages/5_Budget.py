@@ -1,5 +1,6 @@
 import streamlit as st
-import db, logic
+import db
+from utils.util import show_ducat_bar
 
 def update_conversion_rate(new_rate):
     old_rate = float(db.query("SELECT value FROM user_stats WHERE key='conversion_rate'")[0][0])
@@ -21,7 +22,7 @@ def smart_float_str(x):
 
 st.header("💸 Manage Your Budget")
 
-logic.show_ducat_bar()
+show_ducat_bar()
 # Show current budget
 budget = int(db.query("SELECT value FROM user_stats WHERE key='budget'")[0][0])
 st.write(f"**Current budget:** {budget}")

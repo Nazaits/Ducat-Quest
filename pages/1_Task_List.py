@@ -1,6 +1,7 @@
-import streamlit as st, db, logic
+import streamlit as st, db
+from utils.util import show_ducat_bar, show_timers, smart_ducat_str
+from utils.llm import llm_evaluate_report_and_award
 from datetime import datetime, timedelta
-import time
 
 def get_last_8am(now=None):
     now = now or datetime.now()
@@ -49,8 +50,8 @@ def reset_daily_and_weekly_tasks():
 
 # Call this at the top of your Task List page
 reset_daily_and_weekly_tasks()
-logic.show_ducat_bar()
-logic.show_timers(page="tasks")
+show_ducat_bar()
+show_timers(page="tasks")
 
 st.header("📝 Task List")
 
@@ -70,7 +71,7 @@ else:
         c_name, c_val, c_status, c_button = st.columns([4, 2, 1, 1])
         with c_name.expander(f"{name}"):
             st.write(description or "*No description*")
-        c_val.write(f"{logic.smart_ducat_str(init_val-curr_val)} / {logic.smart_ducat_str(init_val)} 💰")
+        c_val.write(f"{smart_ducat_str(init_val-curr_val)} / {smart_ducat_str(init_val)} 💰")
         c_status.write("✅" if completed else "⏳")
         if not completed:
             if c_button.button("✅ Done", key=f"done_{tid}"):
@@ -109,7 +110,7 @@ st.subheader("📋 Daily Report")
 report_text = st.text_area("What did you do today?", height=150)
 if st.button("Submit Report"):
     with st.spinner("Processing Report..."):
-        results, total = logic.llm_evaluate_report_and_award(report_text)
+        results, total = llm_evaluate_report_and_award(report_text)
         if total > 0:
             for tid, awarded, reason, completed in results:
                 task_name = db.query("SELECT name FROM tasks WHERE id=?", (tid,))[0][0]

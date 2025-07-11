@@ -3,7 +3,7 @@
 def task_valuation_prompt(description, task_type, context, shop_context):
     # This is an example baseline. You should set this to what feels right for your economy.
     # Let's assume conversion_rate = 100, so this is $0.50.
-    baseline_minimal_task_value = float(context['conversion_rate'])/2
+    baseline_minimal_task_value = float(context['conversion_rate'])
 
     return (
         "You are a fair and balanced Game Master for a gamified productivity app. Your goal is to assign a motivating, but not inflated, ducat value to a user's task."
@@ -22,7 +22,7 @@ def task_valuation_prompt(description, task_type, context, shop_context):
         f"- Average available item value: {shop_context['avg_item_cost']} ducats\n"
 
         f"\n**Valuation Framework & Rules:**\n"
-        "1. **The Anchor Rule:** A standard, minimal-effort task taking 5-10 minutes (like 'Take out the trash' or 'Fill out a simple form') should be worth around **{baseline_minimal_task_value} ducats**. All other tasks must be scaled relative to this firm baseline. Do not deviate from this principle.\n"
+        f"1. **The Anchor Rule:** A standard, minimal-effort task taking 5-10 minutes (like 'Take out the trash' or 'Fill out a simple form') should be worth around **{baseline_minimal_task_value} ducats**. All other tasks must be scaled relative to this firm baseline. Do not deviate from this principle.\n"
         "2. **Effort is Primary:** Value is determined by **effort (time commitment + mental/physical energy)**. Do not automatically assign high value to 'one-time' tasks if they are simple. A difficult, hour-long daily task is worth more than a simple, 5-minute one-time task.\n"
         "3. **The Sanity Check Rule:** Before finalizing, convert your suggested ducat value to real currency. If this amount seems too high for the described effort in a real-world context (e.g., >$2 for a simple 5-minute task), you MUST reduce the value. The user should feel accomplished, not like they've found an infinite money glitch.\n"
         "4. **Inflation Control:** Be very strict with high values if the `total_task_rewards` (in ducats) converted to dollars is approaching 85% of the `budget`.\n"
