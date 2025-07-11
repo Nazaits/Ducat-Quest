@@ -25,9 +25,9 @@ st.header("🏆 Shop & Rewards")
 
 # --- Add new item
 with st.expander("➕ Add a Reward Item"):
-    link = st.text_input("Product Link (or image URL, optional)")
+    link = st.text_input("Product Link or Product Name (optional)")
     value = st.number_input("Price ($)", min_value=0.0, step=1.0)
-    uploaded_img = st.file_uploader("Or upload screenshot/image", type=["png", "jpg", "jpeg"])
+    uploaded_img = st.file_uploader("Or upload screenshot/image (optional)", type=["png", "jpg", "jpeg"])
     image_path = ""
     image_url = ""
     if not uploaded_img and link:

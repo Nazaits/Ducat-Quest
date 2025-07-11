@@ -39,6 +39,8 @@ Then install your dependencies:
 uv sync
 ```
 
+---
+
 ## Quick Start
 
 **1. (If you haven’t installed dependencies, see above.)**
@@ -68,3 +70,26 @@ uv pip run streamlit run app.py
 * Start adding tasks, dreaming up questionable rewards, and conquering your productivity one ducat at a time.
 
 ---
+
+## Features
+
+* **Ducat-Powered Motivation:**
+  Every task you add is assigned a magical (and sometimes infuriating) ducat value by a Large Language Model that understands both ambition and pain.
+* **AI Judges All:**
+  No more self-sabotage or analysis paralysis—just let the AI decide how much that laundry is *really* worth.
+* **Progress Reports & Partial Grading:**
+  Didn’t quite finish a task? Write a daily report and let the AI grade your honesty—get full, partial, or “nice try” ducats based on what you actually did.
+  (*Yes, you get credit for effort. Yes, it’s that smart.*)
+* **Shop of Wonders:**
+  Add any real-life reward (from a LEGO minifig to a new car) to your shop. Redeem your hard-earned ducats for a prize you probably didn’t need, but definitely deserved.
+* **Gamified Rotation:**
+  Shop rewards rotate weekly—sometimes you win, sometimes you weep. Instantly add “must-have” rewards to the rotation (with a ducat tax!) if you can’t wait for fate.
+* **Budget Controls:**
+  Set (and even top-up) your monthly budget, adjust the conversion rate, and watch your economy rise and fall like crypto—minus the SEC.
+* **Inflation-Proofing:**
+  Built-in inflation protection. The AI sees your whole shop and budget, so rewards don’t become Monopoly money.
+* **Completed Task History:**
+  Relive your glory! View a full, expandable list of completed tasks, including when you did them and how many ducats you scored.
+* **Totally Vibe-Coded:**
+  The code is messy, the features are genius, and the experience is unlike anything on the App Store.
+  *(This README was also written entirely in vibe mode. No apologies.)*
