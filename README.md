@@ -92,4 +92,3 @@ uv pip run streamlit run app.py
   Relive your glory! View a full, expandable list of completed tasks, including when you did them and how many ducats you scored.
 * **Totally Vibe-Coded:**
   The code is messy, the features are genius, and the experience is unlike anything on the App Store.
-  *(This README was also written entirely in vibe mode. No apologies.)*
