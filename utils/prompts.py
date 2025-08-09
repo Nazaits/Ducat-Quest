@@ -42,8 +42,8 @@ def task_valuation_prompt(description, task_type, context, shop_context):
 
 def shop_item_prompt(link_or_img, value):
     return (
-        f"Given this purchase info: {link_or_img} with value ${value}, and the imgae(if provided)"
-        "generate a concise item title and a short description suitable for a rewards shop. The description should be at most 1 very short sentance. Always return results in english, no matter waht source language provided."
+        f"Given this purchase info: {link_or_img} with value ${value}, and the image (if provided), "
+        "generate a concise item title and a short description suitable for a rewards shop. The description should be at most one very short sentence. Always return results in English, no matter what source language is provided. "
         "Output format:\nTitle: <title>\nDescription: <description>"
     )
 
