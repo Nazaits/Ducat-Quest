@@ -12,8 +12,6 @@ wheels/
 
 assets/*
 
-*.txt
-
 *.db
 
 TODO.txt
