@@ -24,7 +24,7 @@ st.header("💸 Manage Your Budget")
 
 show_ducat_bar()
 # Show current budget
-budget = int(db.query("SELECT value FROM user_stats WHERE key='budget'")[0][0])
+budget = float(db.query("SELECT value FROM user_stats WHERE key='budget'")[0][0])
 st.write(f"**Current budget:** {budget}")
 
 # Add or subtract budget
@@ -40,7 +40,7 @@ if st.button("Apply Change"):
         st.rerun()
 
 # Or set a specific budget directly
-new_budget_val = st.number_input("Set new budget:", value=budget, step=1)
+new_budget_val = st.number_input("Set new budget:", value=budget, step=1.0)
 if st.button("Set Budget"):
     with st.spinner("Setting Budget..."):
         db.query(

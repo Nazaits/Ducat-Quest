@@ -44,9 +44,11 @@ def rotate_shop():
     total = 0
     db.query("UPDATE shop_items SET in_rotation=0", commit=True)
     for item_id, rv in items:
-        if total + rv <= cap:
+        if total <= cap:
             db.query("UPDATE shop_items SET in_rotation=1 WHERE id=?", (item_id,), commit=True)
             total += rv
+        elif total > cap:
+            break
 
 
 def add_shop_item(link_or_img: str, real_value: float, image_path: str = "", instant_rotation: bool = False, ducat_premium: float = 0.0):
@@ -67,11 +69,17 @@ def buy_shop_item(rid, ducats):
     have = float(db.query("SELECT value FROM user_stats WHERE key='ducats_earned'")[0][0]) - \
            float(db.query("SELECT value FROM user_stats WHERE key='ducats_spent'")[0][0])
     if have >= ducats:
+        # Mark item as bought
         db.query("UPDATE shop_items SET bought=1 WHERE id=?", (rid,), commit=True)
-        db.query("UPDATE user_stats SET value=value+? WHERE key='ducats_spent'", (ducats,), commit=True)
+        # Add to ducats spent
+        db.query("UPDATE user_stats SET value = value + ? WHERE key='ducats_spent'", (ducats,), commit=True)
+        # Subtract real value from budget
+        real_val = db.query("SELECT real_value FROM shop_items WHERE id=?", (rid,))[0][0]
+        db.query("UPDATE user_stats SET value = value - ? WHERE key='budget'", (real_val,), commit=True)
         return True
     else:
         return False
+
     
 
 def extract_image_from_url(url):
@@ -116,11 +124,34 @@ def show_timers(page="tasks"):
     daily_left = next_8am - now
 
     # Next weekly reset/shop rotation at Monday 8am or 12pm
-    days_ahead = (7 - now.weekday()) % 7  # Days until next Monday
+    if now.weekday() == 0 and now.hour >= 12:
+        days_ahead = 7
+    else:
+        days_ahead = (0 - now.weekday() + 7) % 7
+
     next_monday_8am = (now + timedelta(days=days_ahead)).replace(hour=8, minute=0, second=0, microsecond=0)
     next_monday_12pm = (now + timedelta(days=days_ahead)).replace(hour=12, minute=0, second=0, microsecond=0)
+
+    # Special handling for Monday before 12 PM
+    if now.weekday() == 0 and now.hour < 12:
+        shop_left = next_monday_12pm - now
+    else:
+        # For all other cases, calculate from the upcoming Monday at 12 PM
+        days_until_next_monday = (0 - now.weekday() + 7) % 7
+        if days_until_next_monday == 0 and now.hour >= 12: # It's Monday after 12pm
+            days_until_next_monday = 7
+        next_monday_12pm_for_shop = (now + timedelta(days=days_until_next_monday)).replace(hour=12, minute=0, second=0, microsecond=0)
+        shop_left = next_monday_12pm_for_shop - now
+
+
     weekly_left = next_monday_8am - now
-    shop_left = next_monday_12pm - now
+
+    # Previous code
+    # days_ahead = (7 - now.weekday()) % 7  # Days until next Monday
+    # next_monday_8am = (now + timedelta(days=days_ahead)).replace(hour=8, minute=0, second=0, microsecond=0)
+    # next_monday_12pm = (now + timedelta(days=days_ahead)).replace(hour=12, minute=0, second=0, microsecond=0)
+    # weekly_left = next_monday_8am - now
+    # shop_left = next_monday_12pm - now
 
     # Helper for smart display
     def format_timedelta(delta):

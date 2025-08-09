@@ -17,7 +17,11 @@ def rotate_shop_if_needed():
     last_rot_dt = datetime.fromisoformat(last_rot)
     # Find most recent Monday 12pm
     most_recent_monday = (now - timedelta(days=now.weekday())).replace(hour=12, minute=0, second=0, microsecond=0)
-    if now >= most_recent_monday and last_rot_dt < most_recent_monday:
+    prev_monday = most_recent_monday
+    if now.weekday() == 0:
+        prev_monday = (now - timedelta(days=7)).replace(hour=12, minute=0, second=0, microsecond=0)
+    print('Hello?')
+    if (now >= most_recent_monday and last_rot_dt < most_recent_monday) or (now < most_recent_monday and last_rot_dt < prev_monday):
         rotate_shop()
         db.query("UPDATE user_stats SET value=? WHERE key='last_shop_rotation'", (now.isoformat(),), commit=True)
 

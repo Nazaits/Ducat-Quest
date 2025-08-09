@@ -14,7 +14,7 @@ def smart_ducat_str(val):
 
 
 def get_budget_context():
-    budget = int(db.query("SELECT value FROM user_stats WHERE key='budget'")[0][0])
+    budget = int(float(db.query("SELECT value FROM user_stats WHERE key='budget'")[0][0]))
     conversion_rate = float(db.query("SELECT value FROM user_stats WHERE key='conversion_rate'")[0][0])
     ducats_earned = float(db.query("SELECT value FROM user_stats WHERE key='ducats_earned'")[0][0])
     ducats_spent_row = db.query("SELECT value FROM user_stats WHERE key='ducats_spent'")

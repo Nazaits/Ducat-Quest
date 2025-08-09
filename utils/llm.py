@@ -40,7 +40,7 @@ def llm_rate_task(desc: str, typ: str):
         }
     )
     # Parse structured output
-    data: list[TaskValuation] = resp.parsed  # uses structured Gemini flow :contentReference[oaicite:2]{index=2}
+    data: list[TaskValuation] = resp.parsed  # type: ignore # uses structured Gemini flow :contentReference[oaicite:2]{index=2}
     if not data:
         return "Untitled Task", random.randint(1, 10)
     return data[0].title, data[0].value
@@ -71,7 +71,7 @@ def llm_describe_shop(link_or_img, value, image_path=None):
             "response_schema": list[ShopItem],
         }
     )
-    items: list[ShopItem] = resp.parsed
+    items: list[ShopItem] = resp.parsed # type: ignore
     if not items:
         return "Unnamed Item", ""
     item = items[0]
@@ -105,7 +105,7 @@ def llm_evaluate_report_and_award(report_text):
             "response_schema": list[TaskAward],  # Structured output!
         }
     )
-    awarded_results: list[TaskAward] = response.parsed
+    awarded_results: list[TaskAward] = response.parsed # type: ignore
 
     total_ducats = 0
     detailed_results = []
