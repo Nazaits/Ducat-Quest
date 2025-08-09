@@ -1,5 +1,0 @@
-Add readme with installation and check it out
-Optional changes:
-Add big rewards
-Add export button for shop
-Add task completion counter (for daily and weekly) then display it in completed tasks
