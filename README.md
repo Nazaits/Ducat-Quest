@@ -63,6 +63,8 @@ uv pip run streamlit run app.py
 
 *(Why use `uv pip run`? It runs things with exactly your locked environment—no more, no less. Maximum vibes, minimal drama.)*
 
+**Or, just tun the "Ducat Quest.cmd" (this assumes you have uv set up)
+
 ---
 
 * The app will launch in your browser.
