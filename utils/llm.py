@@ -98,7 +98,7 @@ def llm_evaluate_report_and_award(report_text):
     prompt = prompts.report_processing_prompt(tasks_data, report_text)
     # Send to Gemini, get structured JSON output
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model=MODEL,
         contents=prompt,
         config={
             "response_mime_type": "application/json",

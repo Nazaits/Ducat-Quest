@@ -20,16 +20,6 @@ def get_tasks():
     return db.query("SELECT * FROM tasks ORDER BY type, created_at")
 
 
-def award_ducats_for_completed():
-    tasks = db.query("SELECT id,ducat_value FROM tasks WHERE status='completed'")
-    total = sum(r[1] for r in tasks)
-    if tasks:
-        db.query("UPDATE user_stats SET value = value + ? WHERE key='ducats_earned'",
-                 (total,), commit=True)
-        db.query("UPDATE tasks SET status='processed' WHERE status='completed'", commit=True)
-    return total
-
-
 def rotate_shop():
     BUDGET_FRACTION = 0.25  # 1/4 of budget
     SHOP_FRACTION = 0.33    # 1/3 of total shop value
